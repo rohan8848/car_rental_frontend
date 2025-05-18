@@ -71,14 +71,14 @@ const ManageBookings = () => {
     }
   };
 
-  const handleStatusChange = async (id, status) => {
+  const handleStatusChange = async (id, status, paymentStatus) => {
     try {
-      const response = await api.put(`/bookings/${id}/status`, { status });
+      const response = await api.put(`/bookings/${id}/status`, { status, paymentStatus });
       if (response.data.success) {
         setBookings(
           bookings.map((booking) =>
             booking._id === id
-              ? { ...booking, status: response.data.data.status }
+              ? { ...booking, status: response.data.data.status, paymentStatus: response.data.data.paymentStatus }
               : booking
           )
         );
@@ -435,6 +435,11 @@ const ManageBookings = () => {
                           <FiMapPin className="mr-2 text-gray-400" />
                           {booking.address || "N/A"}
                         </p>
+                        <p className="text-sm text-gray-600 flex items-center mb-1">
+                          <span className="font-semibold mr-2">Payment Method:</span>
+                          {booking.paymentMethod ? booking.paymentMethod.charAt(0).toUpperCase() + booking.paymentMethod.slice(1) : 'N/A'}
+                        </p>
+                      
                         {booking.paymentMethod === "khalti" &&
                           booking.transactionId && (
                             <p className="text-sm text-purple-700 font-medium mt-1">
@@ -621,7 +626,7 @@ const ManageBookings = () => {
                   <select
                     value={booking.status}
                     onChange={(e) =>
-                      handleStatusChange(booking._id, e.target.value)
+                      handleStatusChange(booking._id, e.target.value, booking.paymentStatus)
                     }
                     className="px-4 py-2 border rounded-lg mr-auto"
                   >
