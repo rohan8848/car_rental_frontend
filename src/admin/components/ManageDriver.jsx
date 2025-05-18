@@ -421,7 +421,7 @@ const ManageDriver = () => {
                                 );
                                 e.target.onerror = null;
                                 e.target.src =
-                                  "";
+                                  "https://via.placeholder.com/40?text=Driver";
                               }}
                             />
                           ) : (
@@ -732,7 +732,7 @@ const ManageDriver = () => {
                         );
                         e.target.onerror = null;
                         e.target.src =
-                          "";
+                          "https://via.placeholder.com/150?text=Driver";
                       }}
                     />
                   ) : (
